@@ -46,7 +46,7 @@ function CardProducto({ producto }) {
   return (
     <div className="producto">
       <div className="imagen-container">
-        <img src={imagen || "https://via.placeholder.com/150"} alt={titulo} />
+      <img src={imagen || "https://via.placeholder.com/150"} alt={titulo} />
       </div>
 
       <div className="rating-container">{renderEstrellas(estrellas)}</div>

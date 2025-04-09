@@ -1,16 +1,15 @@
-import "../assets/css/FormularioPublicacion.css";
 import axios from "axios";
 import { useState } from "react";
-
+import "../assets/css/FormularioPublicacion.css";
 
 function FormularioPublicacion() {
   const [imagenes, setImagenes] = useState([]);
-  const [urlImagen, setUrlImagen] = useState(""); // Estado para la URL de la imagen
+  const [urlImagen, setUrlImagen] = useState("");
 
   const [formData, setFormData] = useState({
     titulo: "",
     precio: "",
-    categoria: "",     
+    categoria: "",
     descripcion: "",
     stock: 1,
   });
@@ -20,23 +19,19 @@ function FormularioPublicacion() {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-
- 
-
-  // Nuevo método para manejar el cambio de URL
   const handleUrlChange = (e) => {
     setUrlImagen(e.target.value);
   };
 
-  // Método para añadir la URL a la lista de imágenes
   const agregarImagen = () => {
     if (!urlImagen.trim()) return;
     if (imagenes.length >= 4) {
       alert("Solo puedes añadir hasta 4 imágenes");
       return;
     }
-    setImagenes([...imagenes, urlImagen]);
-    setUrlImagen(""); // Reiniciar el campo de entrada
+
+    setImagenes((prev) => [...prev, urlImagen]); // ✅ forma segura
+    setUrlImagen("");
   };
 
   const eliminarImagen = (index) => {
@@ -45,27 +40,31 @@ function FormularioPublicacion() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-  
-    const token = localStorage.getItem("token"); 
-    const userId = localStorage.getItem("userId"); 
-  
+
+    const token = localStorage.getItem("token");
+    const userId = localStorage.getItem("userId");
+
     const mapCategoria = {
       hombre: 1,
       mujer: 2,
       accesorios: 3,
       tecnologia: 4,
     };
-  
+
+    console.log("🟨 Imagenes actuales:", imagenes);
+
     const productoFinal = {
       titulo: formData.titulo,
       descripcion: formData.descripcion,
       precio: parseFloat(formData.precio),
-      categoria_id: mapCategoria[formData.categoria],      
+      categoria_id: mapCategoria[formData.categoria],
       stock: parseInt(formData.stock),
-      imagen: imagenes[0] || null,
+      imagen: imagenes.length > 0 ? imagenes[0] : null, // ✅ esto es lo que se guarda
       vendedor_id: parseInt(userId),
     };
-  
+
+    console.log("✅ Producto enviado al backend:", productoFinal);
+
     axios
       .post("https://backend-market-8jdy.onrender.com/productos", productoFinal, {
         headers: {
@@ -116,7 +115,6 @@ function FormularioPublicacion() {
         </div>
 
         <p className="titulo-imagenes">Añadir imágenes mediante URL</p>
-        {/* Campo de entrada para la URL de la imagen */}
         <div className="url-input-container">
           <input
             type="url"
@@ -125,7 +123,11 @@ function FormularioPublicacion() {
             placeholder="Pega aquí la URL de la imagen"
             className="url-input"
           />
-          <button onClick={agregarImagen} className="agregar-url-btn">
+          <button
+            onClick={agregarImagen}
+            type="button"
+            className="agregar-url-btn"
+          >
             Añadir
           </button>
         </div>
@@ -143,7 +145,6 @@ function FormularioPublicacion() {
               type="text"
               id="titulo"
               name="titulo"
-              placeholder="Título del producto"
               value={formData.titulo}
               onChange={handleChange}
             />
@@ -155,7 +156,6 @@ function FormularioPublicacion() {
               type="number"
               id="precio"
               name="precio"
-              placeholder="Precio"
               value={formData.precio}
               onChange={handleChange}
             />
@@ -193,16 +193,11 @@ function FormularioPublicacion() {
             </select>
           </div>
 
-        
-
-        
-
           <div className="grupo-input">
             <label htmlFor="descripcion">Descripción</label>
             <textarea
               id="descripcion"
               name="descripcion"
-              placeholder="Descripción"
               value={formData.descripcion}
               onChange={handleChange}
             ></textarea>

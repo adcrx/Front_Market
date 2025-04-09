@@ -24,25 +24,20 @@ function DetallePublicacion() {
   useEffect(() => {
     axios.get(`https://backend-market-8jdy.onrender.com/productos/${id}`)
       .then((res) => {
-        // Manejar ambas estructuras de respuesta posibles
         const productoData = res.data.data || res.data;
-        console.log("Datos del producto recibidos:", productoData);
         setProducto(productoData);
         
-        // Comprobar qué propiedad contiene la imagen
-        const imagePath = productoData.image || productoData.imagen;
+        // Accede SIEMPRE a productoData.imagen
+        const imagePath = productoData.imagen;
         if (imagePath) {
           setImagenes([imagePath, imagePath + "?1", imagePath + "?2"]);
         } else {
-          console.error("No se encontró una imagen para el producto");
+          console.error("No se encontró imagen");
         }
       })
-      .catch((err) => {
-        console.error("Error al obtener producto", err);
-        // Mostrar un mensaje de error al usuario
-      });
+      .catch((err) => console.error("Error:", err));
   }, [id]);
-
+  
   // Revisar si ya hay productos con este ID en el carrito
   useEffect(() => {
     if (!producto) return;
