@@ -23,4 +23,27 @@
   .producto-detalle p {
     margin: 2px 0;
   }
+
+.compras-contenido{
+  display: flex;
+  padding-left: 2rem;
+  padding-top: 2rem;
+  flex-direction: column;
   
+}
+
+.compras-contenido	h2{
+  display: flex;
+  align-items: flex-start;
+}
+
+.tarjeta-compra{
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  background-color: white;
+  padding: 1rem;
+  border-radius: 10px;
+  box-shadow: 0px 0px 5px rgba(0,0,0,0.2);
+  margin: 1rem;	
+}

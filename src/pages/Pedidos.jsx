@@ -72,7 +72,7 @@ export default function MisPedidos() {
     <div className="pedidos-container">
       <SidebarPerfil />
       <div className="pedidos-content">
-        <h1>LISTADO DE PEDIDOS</h1>
+        <h2>LISTADO DE PEDIDOS</h2>
         <div className="pedidos-list">
           {pedidos.map((pedido) => {
             const estadoActual = pedido.status || "Pendiente";

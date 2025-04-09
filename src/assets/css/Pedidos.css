@@ -10,13 +10,19 @@
   background: #f5f5f5;
 }
 
+.pedidos-content h2 {
+  display: flex;
+  align-items: flex-start;
+}
+
 .pedidos-list {
   max-width: 900px;
-  margin: 0 auto;
+ 
 }
 
 .pedido-box {
   display: flex;
+  
   gap: 1rem;
   background: white;
   padding: 1rem;
@@ -24,6 +30,8 @@
   margin-bottom: 1rem;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
   align-items: center;
+  margin-top: 2rem;
+  margin-left: 2rem;
 }
 
 .pedido-img {

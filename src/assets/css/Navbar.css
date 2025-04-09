@@ -120,10 +120,12 @@
   cursor: pointer;
   font-size: 16px;
   padding: 5px 10px;
+  
 }
 
 .nav-links button:hover {
   color: #ffcc00;
+  background: none
 }
 
 /* Asegúrate de importar las fuentes necesarias */
