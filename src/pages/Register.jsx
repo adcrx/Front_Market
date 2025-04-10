@@ -1,7 +1,7 @@
-import '../assets/css/Register.css'; 
-import { Link } from "react-router-dom";
-import registerImg from '../assets/img/Register/Sale_image.jpg';
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
+import '../assets/css/Register.css'; 
+import registerImg from '../assets/img/Register/Sale_image.jpg';
 import avatar1 from '../assets/img/Register/icon1.png';
 import avatar2 from '../assets/img/Register/icon2.png';
 import avatar3 from '../assets/img/Register/icon3.png';
@@ -16,6 +16,8 @@ const Register = () => {
     avatar: ''  // Nuevo campo para almacenar el avatar seleccionado
   });
 
+  const [avatarError, setAvatarError] = useState(""); // Estado para manejar el error de avatar
+
   const handleChange = (e) => {
     setForm({
       ...form,
@@ -28,10 +30,17 @@ const Register = () => {
       ...prevForm,
       avatar: avatar  
     }));
+    setAvatarError(""); // Limpiar el error si el usuario selecciona un avatar
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!form.avatar) {
+      setAvatarError("Escoge un avatar :D"); // Mostrar mensaje de error si no hay avatar
+      return;
+    }
+
     try {
       const response = await fetch('https://backend-market-8jdy.onrender.com/usuarios/registro', {
         method: 'POST',
@@ -132,6 +141,7 @@ const Register = () => {
                 onClick={() => handleAvatarSelect('avatar4')}
               />
             </div>
+            {avatarError && <p className="error-message">{avatarError}</p>} {/* Mostrar error si no hay avatar */}
           </div>
 
           {/* Botón de registro */}
